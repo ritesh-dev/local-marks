@@ -7,6 +7,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import AppStack from "./AppStack";
+import Subcategories from "../screens/Subcategories";
+import VendorList from "../screens/VendorList";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +44,8 @@ const Routes = () => {
             <Stack.Screen component={Login} name="Login" />
             <Stack.Screen component={Register} name="Register" />
             <Stack.Screen component={AppStack} name="Dashboard" />
+            <Stack.Screen component={Subcategories} name="Subcategories" />
+            <Stack.Screen component={VendorList} name="VendorList" />
         </Stack.Navigator>
     </NavigationContainer>
   );
