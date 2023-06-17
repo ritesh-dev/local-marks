@@ -9,6 +9,11 @@ import Register from "../screens/Register";
 import AppStack from "./AppStack";
 import Subcategories from "../screens/Subcategories";
 import VendorList from "../screens/VendorList";
+import VendorDetails from "../screens/VendorDetails";
+import ProductDetails from "../screens/ProductDetails";
+import ShippingScreen from "../screens/ShippingScreen";
+import PaymentWebview from "../screens/PaymentWebview";
+import PaymentSuccess from "../screens/PaymentSuccess";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +51,11 @@ const Routes = () => {
             <Stack.Screen component={AppStack} name="Dashboard" />
             <Stack.Screen component={Subcategories} name="Subcategories" />
             <Stack.Screen component={VendorList} name="VendorList" />
+            <Stack.Screen component={VendorDetails} name="VendorDetails" />
+            <Stack.Screen component={ProductDetails} name="ProductDetails" />
+            <Stack.Screen component={ShippingScreen} name="ShippingScreen" />
+            <Stack.Screen component={PaymentWebview} name="PaymentWebview" />
+            <Stack.Screen component={PaymentSuccess} name="PaymentSuccess" />
         </Stack.Navigator>
     </NavigationContainer>
   );

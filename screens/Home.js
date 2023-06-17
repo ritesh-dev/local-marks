@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -16,12 +16,15 @@ import Header from "../components/Header";
 import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import Heading from "../components/Heading";
+import { AuthContext } from "../src/AuthProvider";
 
 export default function Home({ navigation }) {
   const [slider, setslider] = useState(null);
   const [categories, setcategories] = useState(null);
   const [featuredVendors, setfeaturedVendors] = useState(null);
   const [latestOffers, setlatestOffers] = useState(null);
+
+  const {user} = useContext(AuthContext)
 
   const isFocused = useIsFocused()
 
@@ -48,7 +51,8 @@ export default function Home({ navigation }) {
   const fetchFeaturedVendors = () => {
     axios.post("https://local-marks.com/api/v1/get-featured-vendor", {
       "latitude": 0,
-      "longitude": 0
+      "longitude": 0,
+      "api_token" : user ? user[0].api_token : ''
     }, {
       headers: {
         "custom-token" : "295828be2ad95b95abcfe20ed09d4df8"
@@ -61,7 +65,8 @@ export default function Home({ navigation }) {
   const fetchLatestOffer = () => {
     axios.post("https://local-marks.com/api/v1/get-featured-offer", {
       "latitude": 0,
-      "longitude": 0
+      "longitude": 0,
+      "api_token" : user ? user[0].api_token : ''
     }, {
       headers: {
         "custom-token" : "295828be2ad95b95abcfe20ed09d4df8"
@@ -137,7 +142,7 @@ export default function Home({ navigation }) {
             horizontal
           />
 
-          <Heading title="Featured Vendors" />
+          <Heading title="Latest Offers" />
 
           <FlatList
             data={latestOffers}

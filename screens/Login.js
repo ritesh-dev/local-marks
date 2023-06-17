@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     Dimensions,
   Image,
@@ -12,8 +12,78 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { getStatusBarHeight } from "react-native-status-bar-height";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../src/AuthProvider";
+import { useIsFocused } from "@react-navigation/native";
+import axios from "axios";
 
 export default function Login({navigation}) {
+
+  const {user, setUser} = useContext(AuthContext)
+
+  const [username, setusername] = useState(null)
+  const [password, setpassword] = useState(null)
+  const [loading, setloading] = useState(true)
+
+  const isFocused = useIsFocused()
+
+
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@user')
+      if(value !== null) {
+        setUser(JSON.parse(value))
+        navigation.navigate("Dashboard")
+      }else{
+        setloading(false)
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  const storeUser = async (usr) => {
+    try {
+      setUser(usr)
+      const jsonValue = JSON.stringify(usr)
+      await AsyncStorage.setItem('@user', jsonValue)
+      navigation.navigate("Dashboard")
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const login = () => {
+    axios.post("https://local-marks.com/api/v1/login", {
+      "email": username,
+      "password": password
+    }, {
+      headers: {
+        "custom-token" : "295828be2ad95b95abcfe20ed09d4df8"
+      }
+    }).then((res) => {
+      if(res.data.status == 'success'){
+        storeUser(res.data.data)
+      }else{
+        alert(res.data.message)
+      }
+    })
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [isFocused])
+  
+
+  
+  if(loading){
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView>
       <View
@@ -57,7 +127,7 @@ export default function Login({navigation}) {
             <MaterialCommunityIcons name="email" size={18} style={{alignItems: 'center', justifyContent: 'center'}} />
           </View>
           <View style={{flex: 0.9}}>
-            <TextInput style={{ padding: 5, backgroundColor: "#ddd" }} placeholder="Enter Username" />
+            <TextInput onChangeText={(e) => setusername(e)} style={{ padding: 5, backgroundColor: "#ddd" }} placeholder="Enter Username" />
           </View>
         </View>
 
@@ -75,7 +145,7 @@ export default function Login({navigation}) {
             <MaterialCommunityIcons name="lock" size={18} style={{alignItems: 'center', justifyContent: 'center'}} />
           </View>
           <View style={{flex: 0.9}}>
-            <TextInput style={{ padding: 5, backgroundColor: "#ddd" }} placeholder="Enter Password" secureTextEntry />
+            <TextInput onChangeText={(e) => setpassword(e)} style={{ padding: 5, backgroundColor: "#ddd" }} placeholder="Enter Password" secureTextEntry />
           </View>
         </View>
 
@@ -107,7 +177,7 @@ export default function Login({navigation}) {
             marginTop: 20
           }}
         >
-            <TouchableOpacity style={{backgroundColor: '#000', paddingHorizontal: 30, paddingVertical: 10}}>
+            <TouchableOpacity onPress={() => login()} style={{backgroundColor: '#000', paddingHorizontal: 30, paddingVertical: 10}}>
                 <Text style={{color: '#fff', textTransform: 'uppercase', fontWeight: '800'}}>Login</Text>
             </TouchableOpacity>
         </View>
