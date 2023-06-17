@@ -14,9 +14,7 @@ export default function Cart({ navigation }) {
   const [address, setaddress] = useState(null);
   const [total, settotal] = useState(0);
 
-  if (!user) {
-    navigation.navigate("Login");
-  }
+  
 
   const isFocused = useIsFocused();
 
@@ -25,7 +23,7 @@ export default function Cart({ navigation }) {
       .post(
         "https://local-marks.com/api/v1/get-cart-details",
         {
-          user_id: user.id,
+          user_id: user ? user.id : '',
         },
         {
           headers: {
@@ -82,9 +80,10 @@ export default function Cart({ navigation }) {
   };
 
   const getShipping = () => {
-    axios
+    if(user){
+      axios
       .post(
-        "https://local-marks.com/api/v1/get-prev-shipping-details?api_token="+user[0].api_token,
+        "https://local-marks.com/api/v1/get-prev-shipping-details?api_token="+user.api_token,
         {
           headers: {
             "custom-token": "295828be2ad95b95abcfe20ed09d4df8",
@@ -97,12 +96,14 @@ export default function Cart({ navigation }) {
         }
 
       });
+    }
   };
 
   const placeOrder = () => {
-    axios
+    if(user){
+      axios
       .post(
-        "https://local-marks.com/api/v1/checkout?api_token="+user[0].api_token,
+        "https://local-marks.com/api/v1/checkout?api_token="+user.api_token,
         {
           payment: 'online',
           shipping_id: address.id
@@ -123,9 +124,13 @@ export default function Cart({ navigation }) {
         }
 
       });
+    }
   }
 
   useEffect(() => {
+    if (!user) {
+      navigation.navigate("Login");
+    }
     setaddress(null)
     getCart();
     getShipping()

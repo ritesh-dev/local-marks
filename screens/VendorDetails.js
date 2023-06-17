@@ -134,7 +134,7 @@ export default function VendorDetails({ navigation, route }) {
   const buyPlan = (id) => {
     if(user){
       axios.post(
-        "https://local-marks.com/api/v1/plan-buy?api_token="+user[0].api_token,
+        "https://local-marks.com/api/v1/plan-buy?api_token="+user.api_token,
         {
           plan_id: id,
         },

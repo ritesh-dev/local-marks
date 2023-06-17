@@ -14,6 +14,8 @@ import ProductDetails from "../screens/ProductDetails";
 import ShippingScreen from "../screens/ShippingScreen";
 import PaymentWebview from "../screens/PaymentWebview";
 import PaymentSuccess from "../screens/PaymentSuccess";
+import MyOrders from "../screens/MyOrders";
+import MyPlans from "../screens/MyPlans";
 
 const Stack = createStackNavigator();
 
@@ -56,6 +58,8 @@ const Routes = () => {
             <Stack.Screen component={ShippingScreen} name="ShippingScreen" />
             <Stack.Screen component={PaymentWebview} name="PaymentWebview" />
             <Stack.Screen component={PaymentSuccess} name="PaymentSuccess" />
+            <Stack.Screen component={MyOrders} name="MyOrders" />
+            <Stack.Screen component={MyPlans} name="MyPlans" />
         </Stack.Navigator>
     </NavigationContainer>
   );

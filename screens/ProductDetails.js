@@ -31,7 +31,7 @@ export default function ProductDetails({ navigation, route }) {
         .post(
           "https://local-marks.com/api/v1/add-to-cart",
           {
-            user_id: user[0].id,
+            user_id: user.id,
             product_id: product.product.id,
             variant_id: product.variants[0].id,
             quantity: 1
@@ -56,7 +56,7 @@ export default function ProductDetails({ navigation, route }) {
         .post(
           "https://local-marks.com/api/v1/add-to-cart",
           {
-            user_id: user[0].id,
+            user_id: user.id,
             product_id: product.product.id,
             variant_id: product.variants[0].id,
             quantity: 1

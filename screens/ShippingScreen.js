@@ -12,9 +12,9 @@ import Heading from "../components/Heading";
 export default function ShippingScreen({ navigation }) {
   const { user } = useContext(AuthContext);
 
-  const [name, setname] = useState(user[0].f_name);
-  const [email, setemail] = useState(user[0].email);
-  const [mobile, setmobile] = useState(user[0].phone);
+  const [name, setname] = useState(user.f_name);
+  const [email, setemail] = useState(user.email);
+  const [mobile, setmobile] = useState(user.phone);
   const [state_id, setstate_id] = useState("");
   const [city, setcity] = useState("");
   const [address, setaddress] = useState("");
@@ -27,7 +27,7 @@ export default function ShippingScreen({ navigation }) {
     axios
       .post(
         "https://local-marks.com/api/v1/get-prev-shipping-details?api_token=" +
-          user[0].api_token,
+          user.api_token,
         {
           headers: {
             "custom-token": "295828be2ad95b95abcfe20ed09d4df8",
@@ -52,7 +52,7 @@ export default function ShippingScreen({ navigation }) {
     axios
       .post(
         "https://local-marks.com/api/v1/save-shipping?api_token=" +
-          user[0].api_token,
+          user.api_token,
           {
             name: name,
             email: email,

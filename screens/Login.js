@@ -63,7 +63,7 @@ export default function Login({navigation}) {
       }
     }).then((res) => {
       if(res.data.status == 'success'){
-        storeUser(res.data.data)
+        storeUser(res.data.data[0])
       }else{
         alert(res.data.message)
       }

@@ -52,7 +52,7 @@ export default function Home({ navigation }) {
     axios.post("https://local-marks.com/api/v1/get-featured-vendor", {
       "latitude": 0,
       "longitude": 0,
-      "api_token" : user ? user[0].api_token : ''
+      "api_token" : ''
     }, {
       headers: {
         "custom-token" : "295828be2ad95b95abcfe20ed09d4df8"
@@ -66,12 +66,13 @@ export default function Home({ navigation }) {
     axios.post("https://local-marks.com/api/v1/get-featured-offer", {
       "latitude": 0,
       "longitude": 0,
-      "api_token" : user ? user[0].api_token : ''
+      "api_token" : ''
     }, {
       headers: {
         "custom-token" : "295828be2ad95b95abcfe20ed09d4df8"
       }
     }).then((res) => {
+      console.log(res.data.data);
       setlatestOffers(res.data.data)
     })
   }
@@ -132,10 +133,10 @@ export default function Home({ navigation }) {
             data={featuredVendors}
             renderItem={({item}) => {
               return (
-                <View style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10}}>
+                <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10}}>
                   <Image source={{uri: item.profile_image}} style={{width: 150, height: 150}} resizeMode="contain"/>
                   <Text style={{fontWeight: '600'}}>{item.f_name}</Text>
-                </View>
+                </TouchableOpacity>
               );
             }}
             keyExtractor = {(item) => item.id}
@@ -148,10 +149,10 @@ export default function Home({ navigation }) {
             data={latestOffers}
             renderItem={({item}) => {
               return (
-                <View style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10}}>
+                <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10}}>
                   <Image source={{uri: item.offer_image}} style={{width: 150, height: 150}} resizeMode="contain"/>
                   <Text style={{fontWeight: '600'}}>{item.offer_title}</Text>
-                </View>
+                </TouchableOpacity>
               );
             }}
             keyExtractor = {(item) => item.id}
