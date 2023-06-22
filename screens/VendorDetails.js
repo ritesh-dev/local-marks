@@ -14,10 +14,16 @@ import Heading from "../components/Heading";
 import axios from "axios";
 import { AuthContext } from "../src/AuthProvider";
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 export default function VendorDetails({ navigation, route }) {
   const { vendor } = route.params;
 
   const [products, setproducts] = useState(null)
+
+  const [viewImg, setViewImg] = useState(null)
+
+  const colors = [ '#00DFA2', '#FF0060', '#F6FA70', '#FF78C4', '#E1AEFF', '#0079FF', '#FFE4A7', '#D25380', '#7AA874', '#EA8FEA', '#FADA9D', '#FF7F3F']
 
   const {user} = useContext(AuthContext)
 
@@ -27,27 +33,29 @@ export default function VendorDetails({ navigation, route }) {
     return (
       <View style={{ padding: 10, backgroundColor: "#fff" }}>
         {item.type == "Image" && (
-          <Image
-            source={{ uri: item.file_name }}
-            style={{ width: 100, height: 100 }}
-          />
+          <TouchableOpacity onPress={() => {setViewImg(item.file_name)}}>
+            <Image
+              source={{ uri: item.file_name }}
+              style={{ width: 100, height: 100, borderRadius: 5 }}
+            />
+          </TouchableOpacity>
         )}
         {item.type == "Video" && (
           <Image
             source={{ uri: item.video_banner }}
-            style={{ width: 100, height: 100 }}
+            style={{ width: 100, height: 100, borderRadius: 5 }}
           />
         )}
       </View>
     );
   };
 
-  const renderPlan = ({ item }) => {
+  const renderPlan = ({ item, index }) => {
     return (
       <TouchableOpacity
         style={{
           padding: 10,
-          backgroundColor: "#fff",
+          backgroundColor: colors[index],
           margin: 10,
           padding: 10,
           width: 150,
@@ -161,17 +169,23 @@ export default function VendorDetails({ navigation, route }) {
   }, [isFocused]);
 
   return (
+    <>
     <ScrollView>
       <Header navigation={navigation} />
 
       <View style={{ padding: 10 }}>
         <Image
           source={{ uri: vendor.profile_image }}
-          style={{ width: "100%", height: 200 }}
+          style={{ width: "100%", height: 200, borderRadius: 5 }}
         />
       </View>
 
-      <Heading title={vendor.f_name} />
+      <View style={{backgroundColor: '#fff', padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+        <Text style={{fontSize: 18, fontWeight: '800'}}>{vendor.f_name}</Text>
+        <TouchableOpacity onPress={() => {navigation.navigate('Gallery', {'gallery': vendor.gallery})}}>
+          <MaterialCommunityIcons name="image" size={28} />
+        </TouchableOpacity>
+      </View>
 
       <Heading title="About" />
 
@@ -183,7 +197,45 @@ export default function VendorDetails({ navigation, route }) {
 
       <Heading title="Timing" />
 
-      <View style={{ padding: 10, backgroundColor: "#fff" }}>
+      <View style={{padding: 10, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff'}}>
+        <View>
+          {JSON.parse(vendor.profile.closed_time).map((el) => {
+            return (
+              <Text style={{fontWeight: '600', textTransform: 'capitalize'}}>{el.day}</Text>
+            )
+          })}
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <View>
+            {JSON.parse(vendor.profile.open_time).map((el) => {
+              if(el.time){
+                return (
+                  <Text style={{fontWeight: '400', textTransform: 'uppercase'}}>{el.time}</Text>
+                )
+              }else{
+                return (
+                  <Text style={{fontWeight: '400', textTransform: 'capitalize', color: 'red'}}>Closed</Text>
+                )
+              }
+            })}
+          </View>
+          <View>
+            {JSON.parse(vendor.profile.closed_time).map((el) => {
+              if(el.time){
+                return (
+                  <Text style={{fontWeight: '400', textTransform: 'uppercase'}}> - {el.time}</Text>
+                )
+              }else{
+                return (
+                  <Text style={{fontWeight: '400', textTransform: 'uppercase'}}></Text>
+                )
+              }
+            })}
+          </View>
+        </View>
+      </View>
+
+      <View style={{ padding: 10, backgroundColor: "#fff", marginTop: 10 }}>
         <Text>{vendor.address}</Text>
       </View>
 
@@ -267,6 +319,14 @@ export default function VendorDetails({ navigation, route }) {
       />
 
       <View style={{ margin: 50 }}></View>
+
+        
     </ScrollView>
+    {viewImg && (
+      <TouchableOpacity onPress={() => {setViewImg(null)}} style={{backgroundColor: '#fff', position: 'relative', width: '100%', height: '100%', bottom: 0, padding: 20, justifyContent: 'center'}}>
+        <Image source={{uri: viewImg}} style={{width: '100%', height: '80%', resizeMode: 'contain'}} />
+      </TouchableOpacity>
+    )}
+    </>
   );
 }

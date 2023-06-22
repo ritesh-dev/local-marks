@@ -16,6 +16,7 @@ import PaymentWebview from "../screens/PaymentWebview";
 import PaymentSuccess from "../screens/PaymentSuccess";
 import MyOrders from "../screens/MyOrders";
 import MyPlans from "../screens/MyPlans";
+import Gallery from "../screens/Gallery";
 
 const Stack = createStackNavigator();
 
@@ -60,6 +61,7 @@ const Routes = () => {
             <Stack.Screen component={PaymentSuccess} name="PaymentSuccess" />
             <Stack.Screen component={MyOrders} name="MyOrders" />
             <Stack.Screen component={MyPlans} name="MyPlans" />
+            <Stack.Screen component={Gallery} name="Gallery" />
         </Stack.Navigator>
     </NavigationContainer>
   );

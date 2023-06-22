@@ -127,7 +127,7 @@ export default function Login({navigation}) {
             <MaterialCommunityIcons name="email" size={18} style={{alignItems: 'center', justifyContent: 'center'}} />
           </View>
           <View style={{flex: 0.9}}>
-            <TextInput onChangeText={(e) => setusername(e)} style={{ padding: 5, backgroundColor: "#ddd" }} placeholder="Enter Username" />
+            <TextInput onChangeText={(e) => setusername(e)} style={{ padding: 5, backgroundColor: "#ddd", borderRadius: 5 }} placeholder="Enter Username" />
           </View>
         </View>
 
@@ -145,7 +145,7 @@ export default function Login({navigation}) {
             <MaterialCommunityIcons name="lock" size={18} style={{alignItems: 'center', justifyContent: 'center'}} />
           </View>
           <View style={{flex: 0.9}}>
-            <TextInput onChangeText={(e) => setpassword(e)} style={{ padding: 5, backgroundColor: "#ddd" }} placeholder="Enter Password" secureTextEntry />
+            <TextInput onChangeText={(e) => setpassword(e)} style={{ padding: 5, backgroundColor: "#ddd", borderRadius: 5 }} placeholder="Enter Password" secureTextEntry />
           </View>
         </View>
 
@@ -177,7 +177,7 @@ export default function Login({navigation}) {
             marginTop: 20
           }}
         >
-            <TouchableOpacity onPress={() => login()} style={{backgroundColor: '#000', paddingHorizontal: 30, paddingVertical: 10}}>
+            <TouchableOpacity onPress={() => login()} style={{backgroundColor: '#000', paddingHorizontal: 30, paddingVertical: 10, borderRadius: 5}}>
                 <Text style={{color: '#fff', textTransform: 'uppercase', fontWeight: '800'}}>Login</Text>
             </TouchableOpacity>
         </View>
@@ -194,8 +194,9 @@ export default function Login({navigation}) {
             marginTop: 20
           }}
         >
-            <TouchableOpacity onPress={() => {navigation.navigate('Register')}}>
-                <Text style={{fontWeight: '800'}}>Didn't have an account? Register Here.</Text>
+            <TouchableOpacity onPress={() => {navigation.navigate('Register')}} style={{flexDirection: 'row'}}>
+                <Text style={{fontWeight: '800'}}>New To Local Marks?</Text>
+                <Text style={{fontWeight: '800', color: '#f22', marginLeft: 5}}>Join Now</Text>
             </TouchableOpacity>
         </View>
 

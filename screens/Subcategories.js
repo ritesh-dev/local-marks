@@ -48,7 +48,7 @@ export default function Subcategories({ navigation, route }) {
             numColumns={3}
             renderItem={({item}) => {
               return (
-                <TouchableOpacity onPress={() => navigation.navigate('VendorList', {"sid": item.id})} style={{borderColor: 'red', borderWidth: 1, paddingVertical: 15}}>
+                <TouchableOpacity onPress={() => navigation.navigate('VendorList', {"sid": item.id})} style={{paddingVertical: 15}}>
                   <Image source={{uri: item.sub_category_image}} style={{width: (Dimensions.get('screen').width/3) - 10, height: 30}} resizeMode="contain"/>
                   <Text style={{textAlign: 'center', fontWeight: '600', color: 'red', marginTop: 10}}>{item.sub_category_name}</Text>
                 </TouchableOpacity>

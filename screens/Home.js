@@ -110,7 +110,7 @@ export default function Home({ navigation }) {
             loop={true}
           />
         )}
-          <Heading title="Browse by popular categories" />
+          <Heading title="Browse By Popular Categories" />
           
           <FlatList
             columnWrapperStyle={{justifyContent: 'flex-start', paddingHorizontal: 10, backgroundColor: '#fff'}}
@@ -118,7 +118,7 @@ export default function Home({ navigation }) {
             numColumns={3}
             renderItem={({item}) => {
               return (
-                <TouchableOpacity onPress={() => {navigation.navigate('Subcategories', {'cat' : item})}} style={{borderColor: 'red', borderWidth: 1, paddingVertical: 15}}>
+                <TouchableOpacity onPress={() => {navigation.navigate('Subcategories', {'cat' : item})}} style={{paddingVertical: 15}}>
                   <Image source={{uri: item.category_image}} style={{width: (Dimensions.get('screen').width/3) - 10, height: 30}} resizeMode="contain"/>
                   <Text style={{textAlign: 'center', fontWeight: '600', color: 'red', marginTop: 10}}>{item.category_name}</Text>
                 </TouchableOpacity>
@@ -133,8 +133,8 @@ export default function Home({ navigation }) {
             data={featuredVendors}
             renderItem={({item}) => {
               return (
-                <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10}}>
-                  <Image source={{uri: item.profile_image}} style={{width: 150, height: 150}} resizeMode="contain"/>
+                <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10, alignItems: 'center'}}>
+                  <Image source={{uri: item.profile_image}} style={{width: 150, height: 150, borderRadius: 5}} resizeMode="contain"/>
                   <Text style={{fontWeight: '600'}}>{item.f_name}</Text>
                 </TouchableOpacity>
               );
@@ -150,7 +150,7 @@ export default function Home({ navigation }) {
             renderItem={({item}) => {
               return (
                 <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10}}>
-                  <Image source={{uri: item.offer_image}} style={{width: 150, height: 150}} resizeMode="contain"/>
+                  <Image source={{uri: item.offer_image}} style={{width: 150, height: 150, borderRadius: 5}} resizeMode="contain"/>
                   <Text style={{fontWeight: '600'}}>{item.offer_title}</Text>
                 </TouchableOpacity>
               );

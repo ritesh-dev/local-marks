@@ -42,12 +42,14 @@ export default function VendorList({ navigation, route }) {
 
   const rendervendorList = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{ paddingVertical: 15 }}>
+      <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{ padding: 10, backgroundColor: '#fff' }}>
         <Image
           source={{ uri: item.profile_image }}
           style={{
-            width: Dimensions.get("screen").width / 2 - 10,
-            height: 100
+            width: Dimensions.get("screen").width / 2 - 30,
+            height: 100,
+            borderRadius: 5,
+            resizeMode: 'contain'
           }}
           resizeMode="contain"
         />
@@ -58,9 +60,24 @@ export default function VendorList({ navigation, route }) {
             color: "#000",
             marginTop: 10,
             paddingLeft: 10,
+            width: Dimensions.get("screen").width / 2 - 30,
           }}
+          numberOfLines={2}
         >
           {item.f_name}
+        </Text>
+        <Text
+          style={{
+            textAlign: "left",
+            fontWeight: "400",
+            color: "#000",
+            paddingLeft: 10,
+            fontSize: 12,
+            width: Dimensions.get("screen").width / 2 - 30,
+          }}
+          numberOfLines={2}
+        >
+          Open till: {JSON.parse(item.profile.closed_time)[1].time}
         </Text>
       </TouchableOpacity>
     );
