@@ -48,10 +48,9 @@ export default function VendorList({ navigation, route }) {
           style={{
             width: Dimensions.get("screen").width / 2 - 30,
             height: 100,
-            borderRadius: 5,
-            resizeMode: 'contain'
+            borderRadius: 5
           }}
-          resizeMode="contain"
+          resizeMode="stretch"
         />
         <Text
           style={{

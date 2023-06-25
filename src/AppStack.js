@@ -8,7 +8,10 @@ import Account from "../screens/Account";
 
 const Bottom = createBottomTabNavigator();
 
-export default function AppStack() {
+export default function AppStack({route}) {
+
+  const {url} = route.params
+
   return (
     <Bottom.Navigator
       screenOptions={({ route }) => ({
@@ -34,7 +37,7 @@ export default function AppStack() {
         tabBarLabel: () => {}
       })}
     >
-      <Bottom.Screen component={Home} name="Home" />
+      <Bottom.Screen component={Home} name="Home" initialParams={{'url': url}} />
       <Bottom.Screen component={Cart} name="Cart" />
       <Bottom.Screen component={Account} name="Account" />
     </Bottom.Navigator>

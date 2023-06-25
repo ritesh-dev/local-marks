@@ -17,10 +17,11 @@ import PaymentSuccess from "../screens/PaymentSuccess";
 import MyOrders from "../screens/MyOrders";
 import MyPlans from "../screens/MyPlans";
 import Gallery from "../screens/Gallery";
+import VendorDetailId from "../screens/VendorDetailId";
 
 const Stack = createStackNavigator();
 
-const Routes = () => {
+const Routes = ({url}) => {
   const { user, setUser } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(true);
@@ -44,14 +45,14 @@ const Routes = () => {
         </View>
       </SafeAreaView>
     );
-  }
+  } 
 
   return (
     <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen component={Login} name="Login" />
             <Stack.Screen component={Register} name="Register" />
-            <Stack.Screen component={AppStack} name="Dashboard" />
+            <Stack.Screen component={AppStack} name="Dashboard" initialParams={{'url':url}}/>
             <Stack.Screen component={Subcategories} name="Subcategories" />
             <Stack.Screen component={VendorList} name="VendorList" />
             <Stack.Screen component={VendorDetails} name="VendorDetails" />
@@ -62,6 +63,7 @@ const Routes = () => {
             <Stack.Screen component={MyOrders} name="MyOrders" />
             <Stack.Screen component={MyPlans} name="MyPlans" />
             <Stack.Screen component={Gallery} name="Gallery" />
+            <Stack.Screen component={VendorDetailId} name="VendorDetailId" />
         </Stack.Navigator>
     </NavigationContainer>
   );

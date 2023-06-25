@@ -22,7 +22,7 @@ export default function Header({navigation}) {
             />
         </TouchableOpacity>
         <Image
-          source={require("../assets/home-icon.png")}
+          source={require("../assets/icon.png")}
           style={{ height: 70, width: 100 }}
           resizeMode="contain"
         />

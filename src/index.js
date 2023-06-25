@@ -2,10 +2,10 @@ import React from "react";
 import { AuthProvider } from "./AuthProvider";
 import Routes from "./Routes";
 
-const Providers = () => {
+const Providers = ({url}) => {
   return (
     <AuthProvider>
-      <Routes />
+      <Routes url={url} />
     </AuthProvider>
   );
 };

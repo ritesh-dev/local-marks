@@ -18,8 +18,11 @@ import { AuthContext } from "../src/AuthProvider";
 
 import { MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
-export default function VendorDetails({ navigation, route }) {
-  const { vendor } = route.params;
+export default function VendorDetailId({ navigation, route }) {
+  const { id } = route.params;
+
+  const [vendor, setVendor] = useState(null)
+
 
   const [products, setproducts] = useState(null)
 
@@ -135,7 +138,7 @@ export default function VendorDetails({ navigation, route }) {
     axios.post(
       "https://local-marks.com/api/v1/get-vendor-product-new",
       {
-        vendor_id: vendor.id,
+        vendor_id: id,
       },
       {
         headers: {
@@ -144,6 +147,19 @@ export default function VendorDetails({ navigation, route }) {
       }
     ).then((res) => {
         setproducts(res.data.data);
+    });
+  };
+
+  const fetchVendor = () => {
+    axios.get(
+      "https://local-marks.com/api/v1/get-vendor-by-id?vendor_id="+id,
+      {
+        headers: {
+          "custom-token": "295828be2ad95b95abcfe20ed09d4df8",
+        },
+      }
+    ).then((res) => {
+        setVendor(res.data.data);
     });
   };
 
@@ -173,12 +189,14 @@ export default function VendorDetails({ navigation, route }) {
   };
 
   useEffect(() => {
-    console.log(vendor.profile.facebook_link);
-    console.log(vendor.profile.instagram_link);
-    console.log(vendor.profile.twitter_link);
-    console.log(vendor.profile.youtube_link);
     fetchVendorProduct()
+    fetchVendor()
   }, [isFocused]);
+
+
+  if(!vendor){
+    return null;
+  }
 
   return (
     <>

@@ -18,11 +18,13 @@ import axios from "axios";
 import Heading from "../components/Heading";
 import { AuthContext } from "../src/AuthProvider";
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
   const [slider, setslider] = useState(null);
   const [categories, setcategories] = useState(null);
   const [featuredVendors, setfeaturedVendors] = useState(null);
   const [latestOffers, setlatestOffers] = useState(null);
+
+  const {url} = route.params
 
   const {user} = useContext(AuthContext)
 
@@ -72,7 +74,6 @@ export default function Home({ navigation }) {
         "custom-token" : "295828be2ad95b95abcfe20ed09d4df8"
       }
     }).then((res) => {
-      console.log(res.data.data);
       setlatestOffers(res.data.data)
     })
   }
@@ -82,6 +83,10 @@ export default function Home({ navigation }) {
     fetchCategories()
     fetchFeaturedVendors()
     fetchLatestOffer()
+
+    if(url){
+      navigation.navigate("VendorDetailId", {id: url})
+    }
   }, [isFocused])
   
 
@@ -133,7 +138,7 @@ export default function Home({ navigation }) {
             data={featuredVendors}
             renderItem={({item}) => {
               return (
-                <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 10, alignItems: 'center'}}>
+                <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{padding: 10, backgroundColor: '#fff', marginHorizontal: 0, alignItems: 'center'}}>
                   <Image source={{uri: item.profile_image}} style={{width: 150, height: 150, borderRadius: 5}} resizeMode="contain"/>
                   <Text style={{fontWeight: '600'}}>{item.f_name}</Text>
                 </TouchableOpacity>
