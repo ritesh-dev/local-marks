@@ -71,7 +71,7 @@ export default function ShippingScreen({ navigation }) {
       )
       .then((res) => {
         if (res.data.status == "success") {
-          console.log(res.data.data);
+          navigation.goBack()
         }else{
             alert(res.data.message)
         }

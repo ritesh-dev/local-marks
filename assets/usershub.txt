@@ -1,0 +1,64 @@
+1. Press enter no search
+
+2. Submit = like this https://www.spokeo.com/social/profile?q=admin&loaded=1
+
+3. usershub.net/?search=admin = usershub.net/admin
+
+4. Only required domains and delete others :
+
+youtube
+xanga
+imeem
+amazon
+goodreads
+aol
+vimeo
+citysearch
+match.com
+gravatar
+reddit
+meetme
+friendfeed
+crunchbase
+mixi
+tinder
+blogger
+imageshack
+metacafe
+imvu
+diigo
+pinboard
+quora
+fotolog
+dailymotion
+pandora
+github
+pinterest
+blip.fm
+x.com
+linkedin
+ebay
+ask.fm
+about.me
+answers.com
+wordpress
+instagram
+snapchat
+tiktok
+soundcloud
+ign
+facebook
+tumblr
+hulu
+skype
+
+5. Email option to send file and show list of emails of users in admin
+
+6. In domains if exist record so exists else unknown
+
+7. Show list of searched records usernames in right side
+
+8. Some basic design like https://discoverprofile.com/username/
+
+
+

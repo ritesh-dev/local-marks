@@ -85,10 +85,11 @@ export default function Login({navigation}) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: '#fff'}}>
       <View
         style={{
-          alignItems: 'center'
+          alignItems: 'center',
+          backgroundColor: "#fff",
         }}
       >
         <View

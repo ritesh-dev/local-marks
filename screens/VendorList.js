@@ -42,7 +42,7 @@ export default function VendorList({ navigation, route }) {
 
   const rendervendorList = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("VendorDetails", {vendor: item})} style={{ padding: 10, backgroundColor: '#fff' }}>
+      <TouchableOpacity onPress={() => navigation.navigate("VendorDetailId", {id: item.id})} style={{ padding: 10, backgroundColor: '#fff' }}>
         <Image
           source={{ uri: item.profile_image }}
           style={{

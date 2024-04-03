@@ -18,11 +18,11 @@ export default function ProductDetails({ navigation, route }) {
   useEffect(() => {
     console.log("-----");
     console.log(product);
-    fetchPrice();
+    fetchPrice(0);
   }, [isFocused]);
 
-  const fetchPrice = () => {
-    setprice(product.variants[0].regular_price);
+  const fetchPrice = (v) => {
+    setprice(product.variants[v].regular_price - (product.variants[v].regular_price * product.variants[v].discount * 0.01));
   };
 
   const addToCart = () => {
@@ -91,7 +91,7 @@ export default function ProductDetails({ navigation, route }) {
           <Text style={{ fontSize: 18, fontWeight: "800" }}>
             {product.product.product_name}
           </Text>
-          {price && <Text>{price}</Text>}
+          {price && <Text style={{ fontSize: 20, fontWeight: "400" }}>INR {price}</Text>}
         </View>
 
         <Heading title="Quantity" />
@@ -99,9 +99,9 @@ export default function ProductDetails({ navigation, route }) {
         <FlatList
           data={product.variants}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
+          renderItem={({ item, index }) => {
             return (
-              <View style={{ padding: 10 }}>
+              <TouchableOpacity onPress={() => {fetchPrice(index)}} style={{ padding: 10 }}>
                 <Text
                   style={{
                     fontSize: 16,
@@ -112,11 +112,52 @@ export default function ProductDetails({ navigation, route }) {
                 >
                   {item.weight}g
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           }}
           horizontal
         />
+
+{/* brand_name
+how_to_use
+colors
+size */}
+
+        {product.product.brand_name && (
+          <>
+            <Heading title="Brand" />
+            <View style={{ backgroundColor: "#fff", padding: 10 }}>
+              <Text>{product.product.brand_name}</Text>
+            </View>
+          </>
+        )}
+
+        {product.product.how_to_use && (
+          <>
+            <Heading title="How to Use" />
+            <View style={{ backgroundColor: "#fff", padding: 10 }}>
+              <Text>{product.product.how_to_use.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
+            </View>
+          </>
+        )}
+
+        {product.product.colors && (
+          <>
+            <Heading title="Colors" />
+            <View style={{ backgroundColor: "#fff", padding: 10 }}>
+              <Text>{product.product.colors}</Text>
+            </View>
+          </>
+        )}
+
+        {product.product.size && (
+          <>
+            <Heading title="Size" />
+            <View style={{ backgroundColor: "#fff", padding: 10 }}>
+              <Text>{product.product.size}</Text>
+            </View>
+          </>
+        )}
 
         <Heading title="Description" />
 

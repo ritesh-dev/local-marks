@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Linking,
   ScrollView,
+  Share,
   Text,
   TouchableOpacity,
   View,
@@ -15,6 +16,7 @@ import { useIsFocused } from "@react-navigation/native";
 import Heading from "../components/Heading";
 import axios from "axios";
 import { AuthContext } from "../src/AuthProvider";
+import * as Sharing from 'expo-sharing';
 
 import { MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
@@ -24,6 +26,8 @@ export default function VendorDetails({ navigation, route }) {
   const [products, setproducts] = useState(null)
 
   const [viewImg, setViewImg] = useState(null)
+
+  const [company, setCompany] = useState(null)
 
   const colors = [ '#00DFA2', '#FF0060', '#F6FA70', '#FF78C4', '#E1AEFF', '#0079FF', '#FFE4A7', '#D25380', '#7AA874', '#EA8FEA', '#FADA9D', '#FF7F3F']
 
@@ -57,6 +61,12 @@ export default function VendorDetails({ navigation, route }) {
     require('../assets/2_b.jpeg'),
     require('../assets/3_b.jpeg')
   ]
+
+  const shareVendor = async () => {
+    await Share.share({
+      message: 'Checkout this vendor at Local Marks: https://app.local-marks.com/vendor?id='+vendor.id
+    })
+  }
 
   const renderPlan = ({ item, index }) => {
     return (
@@ -147,6 +157,19 @@ export default function VendorDetails({ navigation, route }) {
     });
   };
 
+  const fetchCompany = () => {
+    axios.get(
+      "https://local-marks.com/api/v1/get-company-details",
+      {
+        headers: {
+          "custom-token": "295828be2ad95b95abcfe20ed09d4df8",
+        }
+      }
+    ).then((res) => {
+        setCompany(res.data.data);
+    });
+  };
+
   const buyPlan = (id) => {
     if(user){
       axios.post(
@@ -173,11 +196,9 @@ export default function VendorDetails({ navigation, route }) {
   };
 
   useEffect(() => {
-    console.log(vendor.profile.facebook_link);
-    console.log(vendor.profile.instagram_link);
-    console.log(vendor.profile.twitter_link);
-    console.log(vendor.profile.youtube_link);
+    console.log(vendor);
     fetchVendorProduct()
+    fetchCompany()
   }, [isFocused]);
 
   return (
@@ -194,20 +215,27 @@ export default function VendorDetails({ navigation, route }) {
 
       <View style={{backgroundColor: '#fff', padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
         <Text style={{fontSize: 18, fontWeight: '800'}}>{vendor.f_name}</Text>
-        <TouchableOpacity onPress={() => {navigation.navigate('Gallery', {'gallery': vendor.gallery})}}>
-          <MaterialCommunityIcons name="image" size={28} />
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+          {company && (
+          <TouchableOpacity onPress={() => {Linking.openURL(company.youtube_link)}}>
+            <MaterialCommunityIcons name="youtube-subscription" size={28} color="red" />
+          </TouchableOpacity>
+          )}
+          <TouchableOpacity onPress={() => {navigation.navigate('Gallery', {'gallery': vendor.gallery})}}>
+            <MaterialCommunityIcons name="image" size={28} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff', marginTop: 10}}>
         <View style={{flexDirection: 'row'}}>
-          {vendor.profile.facebook_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.facebook_link)}><MaterialCommunityIcons size={16} style={{ paddingVertical: 15, paddingHorizontal: 10}} name="facebook" /></TouchableOpacity>) }
-          {vendor.profile.instagram_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.instagram_link)}><MaterialCommunityIcons size={16} style={{ paddingVertical: 15, paddingHorizontal: 10}} name="instagram" /></TouchableOpacity>) }
-          {vendor.profile.twitter_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.twitter_link)}><MaterialCommunityIcons size={16} style={{ paddingVertical: 15, paddingHorizontal: 10}} name="twitter" /></TouchableOpacity>) }
-          {vendor.profile.youtube_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.youtube_link)}><MaterialCommunityIcons size={16} style={{ paddingVertical: 15, paddingHorizontal: 10}} name="youtube" /></TouchableOpacity>) }
+          {vendor.profile.facebook_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.facebook_link)}><MaterialCommunityIcons size={32} style={{ paddingVertical: 15, paddingHorizontal: 5}} color="dodgerblue" name="facebook" /></TouchableOpacity>) }
+          {vendor.profile.instagram_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.instagram_link)}><MaterialCommunityIcons size={32} style={{ paddingVertical: 15, paddingHorizontal: 5}} name="instagram" color="red" /></TouchableOpacity>) }
+          {vendor.profile.twitter_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.twitter_link)}><MaterialCommunityIcons size={32} style={{ paddingVertical: 15, paddingHorizontal: 5}} name="twitter" color="facebook" /></TouchableOpacity>) }
+          {vendor.profile.youtube_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.youtube_link)}><MaterialCommunityIcons size={32} style={{ paddingVertical: 15, paddingHorizontal: 5}} name="youtube" color="red" /></TouchableOpacity>) }
         </View>
         <View>
-          {vendor.profile.facebook_link && (<TouchableOpacity onPress={() => Linking.openURL(vendor.profile.facebook_link)}><SimpleLineIcons size={16} style={{ paddingVertical: 15, paddingHorizontal: 20}} name="share" /></TouchableOpacity>) }
+          {vendor.profile.facebook_link && (<TouchableOpacity onPress={() => shareVendor()}><SimpleLineIcons size={24} style={{ paddingVertical: 15, paddingHorizontal: 20}} name="share" /></TouchableOpacity>) }
         </View>
       </View>
 

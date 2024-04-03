@@ -1,7 +1,15 @@
 import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Dimensions, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 
@@ -10,7 +18,7 @@ export default function Subcategories({ navigation, route }) {
 
   const isFocused = useIsFocused();
 
-  const [subcat, setsubcat] = useState(null)
+  const [subcat, setsubcat] = useState(null);
 
   const fetchSubCategories = () => {
     axios
@@ -37,27 +45,60 @@ export default function Subcategories({ navigation, route }) {
         <Image
           source={{ uri: cat.category_banner }}
           style={{ height: 200, width: "100%", borderRadius: 10 }}
+          resizeMode="cover"
         />
       </View>
 
       <Heading title="Select Sub Category" />
 
       <FlatList
-            columnWrapperStyle={{justifyContent: 'flex-start', paddingHorizontal: 10, backgroundColor: '#fff'}}
-            data={subcat}
-            numColumns={3}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity onPress={() => navigation.navigate('VendorList', {"sid": item.id})} style={{paddingVertical: 15}}>
-                  <Image source={{uri: item.sub_category_image}} style={{width: (Dimensions.get('screen').width/3) - 10, height: 30}} resizeMode="contain"/>
-                  <Text style={{textAlign: 'center', fontWeight: '600', color: 'red', marginTop: 10}}>{item.sub_category_name}</Text>
-                </TouchableOpacity>
-              );
-            }}
-            keyExtractor = {(item) => item.id}
-          />
+        columnWrapperStyle={{
+          justifyContent: "flex-start",
+          paddingHorizontal: 10,
+          backgroundColor: "#fff",
+          padding: 10
+        }}
+        data={subcat}
+        numColumns={3}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("VendorList", { sid: item.id })
+              }
+              style={{
+                paddingVertical: 15,
+                borderRightColor: "#ccc",
+                borderRightWidth: 1,
+                padding: 5
+              }}
+            >
+              <Image
+                source={{ uri: item.sub_category_image }}
+                style={{
+                  width: Dimensions.get("screen").width / 3 - 10,
+                  height: 30,
+                }}
+                resizeMode="contain"
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontWeight: "600",
+                  color: "#333",
+                  marginTop: 10,
+                }}
+                numberOfLines={2}
+              >
+                {item.sub_category_name}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+        keyExtractor={(item) => item.id}
+      />
 
-      <View style={{margin: 50}}></View>
+      <View style={{ margin: 50 }}></View>
     </ScrollView>
   );
 }

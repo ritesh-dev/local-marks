@@ -1,40 +1,53 @@
 {
   "expo": {
-    "name": "local-marks",
+    "scheme": "lmapp",
+    "name": "Local Mark",
     "slug": "local-marks",
-    "version": "1.0.0",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "scheme": "app.local-marks.com",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.localmarks.app"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.neel719.localmarks",
+      "package": "com.localmarks.app",
       "intentFilters": [
         {
           "action": "VIEW",
+          "autoVerify": true,
           "data": [
             {
               "scheme": "https",
-              "host": "app.local-marks.com",
+              "host": "lmapp.com",
+              "pathPrefix": "/"
+            },
+            {
+              "scheme": "lmapp",
+              "host": "*",
               "pathPrefix": "/"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
-      ]
+      ],
+      "versionCode": 8 
     },
     "web": {
       "favicon": "./assets/favicon.png"

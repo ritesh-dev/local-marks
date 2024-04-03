@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Header from "../components/Header";
 import { useIsFocused } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Gallery({ navigation, route }) {
   const { gallery } = route.params;
@@ -37,6 +38,7 @@ export default function Gallery({ navigation, route }) {
             }}
           />
         </TouchableOpacity>
+        
       );
     }
   };
@@ -44,14 +46,15 @@ export default function Gallery({ navigation, route }) {
   const renderVideo = ({ item }) => {
     if (item.type != "Image") {
       return (
-        <TouchableOpacity onPress={() => Linking.openURL(item.file_name)} style={{ padding: 10 }}>
-          <Image
-            source={{ uri: item.video_banner }}
-            style={{
+        <TouchableOpacity onPress={() => Linking.openURL("https://youtube.com/watch?v="+item.file_name)} style={{ padding: 10 }}>
+        <Image
+            source={{ uri: "https://img.youtube.com/vi/"+item.file_name+"/1.jpg" }}
+            style={{ 
               width: Dimensions.get("screen").width / 2 - 30,
-              height: 100,
+              height: 100, 
             }}
-          />
+          /> 
+          
         </TouchableOpacity>
       );
     }

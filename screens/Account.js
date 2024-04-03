@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AuthContext } from "../src/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function Account({ navigation }) {
   const { user, setUser } = useContext(AuthContext);
@@ -20,6 +21,40 @@ export default function Account({ navigation }) {
       setUser(null);
     } catch (e) {
       // saving error
+    }
+  };
+
+  const deleteAccount = async () => {
+    console.log("https://local-marks.com/api/v1/account_deactivate/" +
+    user.id +
+    "?api_token=" +
+    user.api_token);
+    try {
+      axios
+        .get(
+          "https://local-marks.com/api/v1/account_deactivate/" +
+            user.id +
+            "?api_token=" +
+            user.api_token,
+          {
+            headers: {
+              "custom-token": "295828be2ad95b95abcfe20ed09d4df8",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.status == "success") {
+            AsyncStorage.removeItem("@user");
+            const u = AsyncStorage.getItem("@user");
+            console.log(u);
+            setUser(null);
+          } else {
+            console.log(res.data);
+          }
+        });
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -82,7 +117,7 @@ export default function Account({ navigation }) {
           alignItems: "center",
           justifyContent: "space-between",
         }}
-        onPress={() => navigation.navigate('MyPlans')}
+        onPress={() => navigation.navigate("MyPlans")}
       >
         <Text style={{ fontWeight: "800" }}>My Plans</Text>
         <MaterialCommunityIcons
@@ -101,7 +136,26 @@ export default function Account({ navigation }) {
           alignItems: "center",
           justifyContent: "space-between",
         }}
-        onPress={() => navigation.navigate('ShippingScreen')}
+        onPress={() => navigation.navigate("MyBookings")}
+      >
+        <Text style={{ fontWeight: "800" }}>My Bookings</Text>
+        <MaterialCommunityIcons
+          name="chevron-right"
+          size={16}
+          style={{ fontWeight: "800" }}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#fff",
+          padding: 10,
+          margin: 10,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+        onPress={() => navigation.navigate("ShippingScreen")}
       >
         <Text style={{ fontWeight: "800" }}>Address</Text>
         <MaterialCommunityIcons
@@ -123,6 +177,27 @@ export default function Account({ navigation }) {
         }}
       >
         <Text style={{ fontWeight: "800" }}>Logout</Text>
+        <MaterialCommunityIcons
+          name="chevron-right"
+          size={16}
+          style={{ fontWeight: "800" }}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => deleteAccount()}
+        style={{
+          backgroundColor: "#fff",
+          padding: 10,
+          margin: 10,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={{ fontWeight: "800", color: "red" }}>
+          Delete My Account
+        </Text>
         <MaterialCommunityIcons
           name="chevron-right"
           size={16}

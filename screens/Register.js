@@ -92,7 +92,7 @@ export default function Register({navigation}) {
   
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: '#fff'}}>
       <View
         style={{
           alignItems: 'center'

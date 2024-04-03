@@ -11,6 +11,7 @@ import Subcategories from "../screens/Subcategories";
 import VendorList from "../screens/VendorList";
 import VendorDetails from "../screens/VendorDetails";
 import ProductDetails from "../screens/ProductDetails";
+import ComboDetails from "../screens/ComboDetails";
 import ShippingScreen from "../screens/ShippingScreen";
 import PaymentWebview from "../screens/PaymentWebview";
 import PaymentSuccess from "../screens/PaymentSuccess";
@@ -18,6 +19,9 @@ import MyOrders from "../screens/MyOrders";
 import MyPlans from "../screens/MyPlans";
 import Gallery from "../screens/Gallery";
 import VendorDetailId from "../screens/VendorDetailId";
+import MyBookings from "../screens/MyBookings";
+import ComboOfferList from "../screens/ComboOfferList";
+import SearchScreen from "../screens/SearchScreen";
 
 const Stack = createStackNavigator();
 
@@ -56,7 +60,9 @@ const Routes = ({url}) => {
             <Stack.Screen component={Subcategories} name="Subcategories" />
             <Stack.Screen component={VendorList} name="VendorList" />
             <Stack.Screen component={VendorDetails} name="VendorDetails" />
+            <Stack.Screen component={ComboOfferList} name="ComboOfferList" />
             <Stack.Screen component={ProductDetails} name="ProductDetails" />
+            <Stack.Screen component={ComboDetails} name="ComboDetails" />
             <Stack.Screen component={ShippingScreen} name="ShippingScreen" />
             <Stack.Screen component={PaymentWebview} name="PaymentWebview" />
             <Stack.Screen component={PaymentSuccess} name="PaymentSuccess" />
@@ -64,6 +70,8 @@ const Routes = ({url}) => {
             <Stack.Screen component={MyPlans} name="MyPlans" />
             <Stack.Screen component={Gallery} name="Gallery" />
             <Stack.Screen component={VendorDetailId} name="VendorDetailId" />
+            <Stack.Screen component={MyBookings} name="MyBookings" />
+            <Stack.Screen component={SearchScreen} name="SearchScreen" />
         </Stack.Navigator>
     </NavigationContainer>
   );

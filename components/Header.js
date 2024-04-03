@@ -22,11 +22,26 @@ export default function Header({navigation}) {
             />
         </TouchableOpacity>
         <Image
-          source={require("../assets/icon.png")}
-          style={{ height: 70, width: 100 }}
+          source={require("../assets/hicon.webp")}
+          style={{ height: 60, width: 100 }}
           resizeMode="contain"
         />
-        <View></View>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
+            <MaterialCommunityIcons
+            name="magnify"
+            size={24}
+            style={{ padding: 10 }}
+            />
+          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
+            <MaterialCommunityIcons
+            name="home"
+            size={24}
+            style={{ padding: 10 }}
+            />
+        </TouchableOpacity>
+        </View>
       </View>
   )
 }

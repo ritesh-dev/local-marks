@@ -12,7 +12,7 @@ export default function PaymentWebview({ navigation, route }) {
     if (!url) return;
 
     // redirect somewhere else
-    if (url.includes('payment-success')) {
+    if (url.includes('payment-success') || url.includes('service-booking-success')) {
         navigation.navigate('PaymentSuccess')
     }
   };

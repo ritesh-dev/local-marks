@@ -11,6 +11,8 @@ const {user} = useContext(AuthContext)
 
 const [orders, setorders] = useState(null)
 
+const [loading, setloading] = useState(true)
+
 const isFocused = useIsFocused()
 
 const fetchOrderHistory = () => {
@@ -20,6 +22,8 @@ const fetchOrderHistory = () => {
         }else{
             alert(res.data.message)
         }
+
+        setloading(false)
     })
 }
 
@@ -46,9 +50,14 @@ const renderOrders = ({item}) => {
 }
 
 
+
   return (
     <ScrollView>
         <Header navigation={navigation} />
+
+        {loading && <Text style={{textAlign: 'center', marginTop: 20}}>Loading...</Text>}
+
+        {!orders && !loading && <Text style={{textAlign: 'center', marginTop: 20}}>No Orders Found</Text>}
 
         <FlatList 
             data={orders}
